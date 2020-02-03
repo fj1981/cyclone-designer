@@ -21,6 +21,11 @@ namespace FrameClient
       return ScreenClient.Start(stPort, prjName);
     }
 
+    public bool RunProject(string prjName)
+    {
+      return ScreenClient.ExcuteProcess(stPort, prjName);
+    }
+
     public bool BeginAddFlowItem()
     {
       return ScreenClient.Dump(stPort);

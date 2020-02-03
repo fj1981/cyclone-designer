@@ -39,12 +39,12 @@ namespace FrameClient
 
     public void OnSaveFile(object func, CfrV8HandlerExecuteEventArgs args)
     {
-
+     
     }
 
     public void OnRun(object func, CfrV8HandlerExecuteEventArgs args)
     {
-
+      phoneProxy?.RunProject(nameProj);
     }
 
     public void OnPause(object func, CfrV8HandlerExecuteEventArgs args)
