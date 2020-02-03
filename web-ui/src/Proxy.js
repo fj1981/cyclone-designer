@@ -53,12 +53,10 @@ export function BeginAddFlowItem() {
     }
 }
 
-export function EndAddFlowItem(type,pt,param) {
+export function EndAddFlowItem(type,pt,preLineNumber,param) {
     Log('EndAddFlowItem');
-    let str = JSON.stringify({type,pt,param});
-    console.log(str);
     if(window.EndAddFlowItem) {
-        let str = JSON.stringify({type,pt,param});
+        let str = JSON.stringify({type,pt,preLineNumber,param});
         console.log(str);
         window.EndAddFlowItem(str);
     }

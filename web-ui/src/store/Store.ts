@@ -10,6 +10,7 @@ class Store {
     @observable public create_flowitem: boolean  = false;
     @observable public hover_rc: Rect[]|null  = null;
     @observable public project: IProject  = {};
+    @observable public cur_sel: number  = -1;
     @observable public editdlg:IEditDialogProp = {autoFocus: true,
         canEscapeKeyClose: true,
         canOutsideClickClose: false,
@@ -66,7 +67,7 @@ class Store {
     }
 
     public AddNewFlowItem(type:FlowItemType, pt:Point , param: string = '') {
-        EndAddFlowItem(type,pt,param);
+        EndAddFlowItem(type,pt,this.cur_sel,param);
     }
 
     @action.bound
