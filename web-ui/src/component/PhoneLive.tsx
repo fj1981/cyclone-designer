@@ -54,8 +54,7 @@ class PhoneLive extends React.Component<IProps, { isContextMenuOpen: boolean }> 
 
     }
     else {
-      console.log("draw2 ----------")
-      ctx.fillStyle = 'rgba(64,64,64,0.4)'; // 设置颜色
+      ctx.fillStyle = 'rgb(64,64,64)'; // 设置颜色
       ctx.fillRect(0, 0, width, height);
     }
 
@@ -105,8 +104,9 @@ class PhoneLive extends React.Component<IProps, { isContextMenuOpen: boolean }> 
     if (!this.props.store!.create_flowitem) {
       return;
     }
-    this.pts.push(this.GetMouserPos(e));
-    this.forceUpdate();
+    this.showContextMenuImpl(e)
+    //this.pts.push(this.GetMouserPos(e));
+    //this.forceUpdate();
   }
 
   private EnableActionButton = () => {
@@ -130,7 +130,7 @@ class PhoneLive extends React.Component<IProps, { isContextMenuOpen: boolean }> 
     this.EnableActionButton();
   }
 
-  private showContextMenu = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  private showContextMenuImpl = (e: React.MouseEvent<HTMLCanvasElement>) => {
     this.ptlastClick = this.GetMouserPos(e);
     console.log(this.ptlastClick);
     e.preventDefault();
@@ -166,7 +166,7 @@ class PhoneLive extends React.Component<IProps, { isContextMenuOpen: boolean }> 
           data-rc={this.props.store!.hover_rc}
           onMouseMove={this.handleMouseMove}
           onClick={this.handleClick}
-          onContextMenu={this.showContextMenu}
+          // onContextMenu={this.showContextMenu}
           style={{ border: "2px solid #185ABD" }}
         />
 
