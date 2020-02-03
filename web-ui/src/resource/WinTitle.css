@@ -1,0 +1,31 @@
+.syscmd {
+  display: inline-flex;
+  width: 32px;
+  background-color: transparent;
+  color: #000000;
+  align-items: center;
+  justify-content: center;
+  transition: all ease-in-out 300ms;
+  font-size: 0.8em;
+}
+
+.syscmd:hover {
+    background-color: rgb(199, 202, 207);
+}
+
+.sysclosecmd {
+    display: inline-flex;
+    width: 32px;
+    background-color: transparent;
+    color: #000000;
+    align-items: center;
+    justify-content: center;
+    transition: all ease-in-out 300ms;
+    font-size: 0.8em;
+  }
+
+  .sysclosecmd:hover {
+    fill:  #FFFFFF;
+    color: #FFFFFF;
+    background-color: #FF0000;
+  }
