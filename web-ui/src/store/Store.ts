@@ -10,7 +10,7 @@ class Store {
     @observable public create_flowitem: boolean  = false;
     @observable public hover_rc: Rect[]|null  = null;
     @observable public project: IProject  = {};
-    @observable public cur_sel: number  = -1;
+    @observable public focus_line: number  = -1;
     @observable public editdlg:IEditDialogProp = {autoFocus: true,
         canEscapeKeyClose: true,
         canOutsideClickClose: false,
@@ -61,13 +61,17 @@ class Store {
             let proj = JSON.parse(projs);
             console.log(proj);
             this.project = proj;
+            if(proj) {
+                this.focus_line =  proj.focusLineNumber;
+            }
+           
         } catch (error) {
            console.log(error);
         } 
     }
 
     public AddNewFlowItem(type:FlowItemType, pt:Point , param: string = '') {
-        EndAddFlowItem(type,pt,this.cur_sel,param);
+        EndAddFlowItem(type,pt,this.focus_line,param);
     }
 
     @action.bound

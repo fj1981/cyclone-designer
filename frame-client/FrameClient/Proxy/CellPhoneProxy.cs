@@ -68,7 +68,7 @@ namespace FrameClient
       }
       newFlowData.point = GlobDef.GetDevPoint(data.pt);
       newFlowData.type = data.type;
-      newFlowData.preLineNumber = -1;
+      newFlowData.preLineNumber = data.preLineNumber;
       newFlowData.serial = newImageName;
 
       string flowItem = JsonConvert.SerializeObject(newFlowData);
