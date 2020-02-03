@@ -11,9 +11,17 @@ namespace FrameClient
   {
     public static Size sz_image = new Size();
     public static double image_markrate = 0.25;
+    public static double point_convert_scale = 2;
     public static string GetImgSizeStr()
     {
       return JsonConvert.SerializeObject(sz_image);
+    }
+    public static Point GetDevPoint(Point pt)
+    {
+      Point ret = new Point();
+      ret.x = (int)(pt.x * point_convert_scale);
+      ret.y = (int)(pt.y * point_convert_scale);
+      return ret;
     }
   }
 }

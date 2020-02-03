@@ -9,11 +9,13 @@ using Newtonsoft.Json;
 namespace FrameClient
 {
   public delegate void NotifyUpdateHoverRectHandler(string rc);
+  public delegate void NotifyEnanleAddFlowItemHandler();
 
   internal class CellPhoneProxy : Common.Singleton<CellPhoneProxy>
   {
     const int stPort = 11111;
     public NotifyUpdateHoverRectHandler notifyUpdateHoverRect;
+    public NotifyEnanleAddFlowItemHandler notifyEnanleAddFlowItem;
     public bool NewProject(string prjName)
     {
       return ScreenClient.Start(stPort, prjName);
@@ -64,7 +66,7 @@ namespace FrameClient
       {
         return false;
       }
-      newFlowData.point = data.pt;
+      newFlowData.point = GlobDef.GetDevPoint(data.pt);
       newFlowData.type = data.type;
       newFlowData.preLineNumber = -1;
       newFlowData.serial = newImageName;
@@ -75,6 +77,7 @@ namespace FrameClient
       {
         return false;
       }
+      notifyEnanleAddFlowItem?.Invoke();
       return true;
       
     }
@@ -82,6 +85,7 @@ namespace FrameClient
     public bool MouseMove(string obj)
     {
       var pt = JsonConvert.DeserializeObject<Point>(obj);
+      pt = GlobDef.GetDevPoint(pt);
       var ret = ScreenClient.sendPoint(stPort, pt.x, pt.y);
       notifyUpdateHoverRect?.Invoke(ret);
       return true;

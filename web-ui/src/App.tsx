@@ -70,10 +70,14 @@ function UpdateHoverRect(rcs: Rect[], rate: number = 1) {
 
 
 function UpdateFlow(proj: string, sz: Size, rate: number) {
-  //UpdateResImpl(resName);
   store.store.LoadProject(proj);
 }
 (window as any).UpdateFlow = UpdateFlow;
+
+function EnableCreateFlowItem() {
+  store.store.create_flowitem = false;
+}
+(window as any).EnableCreateFlowItem = EnableCreateFlowItem;
 
 const AppLayout = styled.div`
   margin:0;

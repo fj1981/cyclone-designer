@@ -25,6 +25,7 @@ namespace FrameClient
       }
       ImgMgr.Get().dataChangedHandler += UpdateVideo;
       CellPhoneProxy.Instance.notifyUpdateHoverRect += UpdateHoverRect;
+      CellPhoneProxy.Instance.notifyEnanleAddFlowItem += EnableAddFlowItem;
     }
 
     private void RegisterJSFunc()
@@ -54,6 +55,10 @@ namespace FrameClient
       ExecuteJavascript($"UpdateHoverRect({rcStr})");
     }
 
+    void EnableAddFlowItem()
+    {
+      ExecuteJavascript($"EnableCreateFlowItem()");
+    }
 
     void UpdateFlow(string rcStr)
     {

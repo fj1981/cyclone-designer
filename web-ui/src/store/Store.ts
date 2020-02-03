@@ -5,8 +5,6 @@ import { BeginAddFlowItem,EndAddFlowItem } from "../Proxy";
 
 
 class Store {
-    // 被观察者，你可以理解成Vuex中的State，也就是说，声明一些想要观察的状态，变量。
-    // 被观察者可以是：JS基本数据类型、引用类型、普通对象、类实例、数组和映射
     @observable public num: number = 0;
     @observable public video_param: IImageShowParam  = {width:500,height:1000,src:''};
     @observable public create_flowitem: boolean  = false;
@@ -74,9 +72,11 @@ class Store {
     @action.bound
     public SetEditDlgState(isShow:boolean,pt:Point = {x:0,y:0}) {
         this.editdlg.isOpen = isShow;
-        this.editdlg.point = pt;
+        if(isShow) {
+            this.editdlg.point = pt;
+        }
+        console.log(pt);
     }
-
 }
 
 export interface IProps {

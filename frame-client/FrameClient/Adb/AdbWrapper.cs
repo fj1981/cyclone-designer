@@ -130,6 +130,7 @@ namespace FrameClient.Adb
 
     bool IFace.display(int width, int height, int barHeight,int scale)
     {
+      GlobDef.point_convert_scale = scale;
       return true;
       //throw new NotImplementedException();
     }

@@ -39,14 +39,15 @@ class PhoneLive extends React.Component<IProps, { isContextMenuOpen: boolean }> 
     var img = new Image();
     let This = this;
     img.onload = function () {
-      console.log("draw1 ----------")
-      ctx.fillStyle = 'rgb(255,255,255)'; // 设置颜色
-      ctx.fillRect(0, 0, width, height);
       ctx.drawImage(img, 0, 0);
-      ctx.fillStyle = 'rgba(128,0,0,0.2)'; // 设置颜色
-      ctx.fillRect(0, 0, width, height);
-      This.drawRects(ctx);
+      if(This.props.store?.create_flowitem) {
 
+        This.drawRects(ctx);
+      }
+      else {
+        ctx.fillStyle = 'rgba(64,64,64,0.4)'; // 设置颜色
+        ctx.fillRect(0, 0, width, height);
+      }
     }
     if (this.props.store!.video_param.src !== '') {
       img.src = this.props.store!.video_param.src;
@@ -54,16 +55,15 @@ class PhoneLive extends React.Component<IProps, { isContextMenuOpen: boolean }> 
     }
     else {
       console.log("draw2 ----------")
-      ctx.fillStyle = 'rgba(128,0,0,0.2)'; // 设置颜色
+      ctx.fillStyle = 'rgba(64,64,64,0.4)'; // 设置颜色
       ctx.fillRect(0, 0, width, height);
     }
-    this.drawRects(ctx);
-    // this.pts.forEach(pt=>{
-    //   ctx.fillStyle = '#FF0000'; // 设置颜色
-    //   ctx.fillRect(pt.x-2,pt.y-2,4,4);
-    // })
 
+    if(this.props.store?.create_flowitem) {
+      this.drawRects(ctx);
+    }
   }
+  
   constructor(props: IProps) {
     super(props);
     this.GetMouserPos = this.GetMouserPos.bind(this);
@@ -132,6 +132,7 @@ class PhoneLive extends React.Component<IProps, { isContextMenuOpen: boolean }> 
 
   private showContextMenu = (e: React.MouseEvent<HTMLCanvasElement>) => {
     this.ptlastClick = this.GetMouserPos(e);
+    console.log(this.ptlastClick);
     e.preventDefault();
     if (!this.props.store!.create_flowitem) {
       return;
