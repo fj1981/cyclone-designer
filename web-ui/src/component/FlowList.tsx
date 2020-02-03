@@ -29,12 +29,13 @@ export default class FlowList extends Component<IProps> {
     static propTypes = {
     }
     GetList = () => {
-        let variables = this.props?.store?.project?.call?.expr;
+        let variables = this.props.store?.project?.call?.expr;
+        let focus_line = this.props.store?.focus_line;
         if(variables) {
-            console.log(variables);
             return variables.map(
                 e => { 
-                    let store ={store:e};
+                    let store ={store2:e, isFocus:false}
+                    store.isFocus = (e.lineNumber === focus_line) || false;
                     return <FlowItem key={e.lineNumber}  {...store} /> }
             );
         }

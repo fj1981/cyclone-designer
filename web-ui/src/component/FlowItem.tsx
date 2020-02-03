@@ -9,19 +9,22 @@ import GlobDef from '../global';
 const FlowItemWapper = styled.div`
    margin:10px; 
 `
-interface IProps2 {
-    store:IFlowItem
+interface IPropsEx {
+    store2:IFlowItem,
+    isFocus:boolean
 }
-class FlowItem extends Component<IProps2,{}> {
+class FlowItem extends Component<IPropsEx,{}> {
     state = {}
     render() {
         return (
             <FlowItemWapper  >
             <Card  interactive={true} elevation={Elevation.TWO}>
                 <div style={{
-                    width:this.props.store?.size?.width || 400,
-                    height:this.props.store?.size?.height || 700,
-                    backgroundImage:`url("${GlobDef.res_url}${this.props.store!.serial}")`,backgroundSize:'100% 100%'}}/>
+                    width:this.props.store2?.size?.width || 400,
+                    height:this.props.store2?.size?.height || 700,
+                    backgroundImage:`url("${GlobDef.res_url}${this.props.store2!.serial}")`,
+                    backgroundSize:'100% 100%',
+                    border:this.props.isFocus? `5px solid red`:``}}/>
                 {/* <img src={require('./test.jpg')} /> */}
             </Card>
             </FlowItemWapper>
