@@ -31,6 +31,12 @@ namespace FrameClient
       return ScreenClient.Dump(stPort);
     }
 
+    public string RemoveProcess(int lineNumber)
+    {
+      return ScreenClient.RemoveProcess(stPort,$"{lineNumber}");
+    }
+
+
     public bool EndAddFlowItem(string obj)
     {
       if(obj == null || obj.Length == 0)

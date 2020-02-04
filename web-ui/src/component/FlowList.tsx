@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { observer, inject } from 'mobx-react'
-import { Divider } from '@blueprintjs/core'
 import styled from 'styled-components'
 import FlowItem from './FlowItem'
 import { IProps } from '../store/Store'
@@ -34,7 +32,8 @@ export default class FlowList extends Component<IProps> {
         if(variables) {
             return variables.map(
                 e => { 
-                    let store ={store2:e, isFocus:false}
+                    let store ={store2:e,
+                         isFocus:false}
                     store.isFocus = (e.lineNumber === focus_line) || false;
                     return <FlowItem key={e.lineNumber}  {...store} /> }
             );

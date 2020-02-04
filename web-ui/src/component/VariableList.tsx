@@ -1,5 +1,5 @@
 import React from "react";
-import Store, { IProps } from "../store/Store";
+import { IProps } from "../store/Store";
 import Variable from "./Variable";
 import { inject, observer } from "mobx-react";
 import styled from 'styled-components'

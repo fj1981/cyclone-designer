@@ -1,6 +1,7 @@
 ﻿using FrameClient.Adb;
 using NetDimension.NanUI;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace FrameClient
@@ -13,6 +14,17 @@ namespace FrameClient
       : base("http://zip.app.local/index.html")
     {
       InitializeComponent();
+      int SH = Screen.PrimaryScreen.Bounds.Height;
+      int SW = Screen.PrimaryScreen.Bounds.Width;
+      using (Graphics graphics = Graphics.FromHwnd(IntPtr.Zero))
+      {
+        SW = (int)(SW * 96 / graphics.DpiX);
+        SH = (int)(SH * 96 / graphics.DpiY);
+      }
+      if(SW < 1400)
+      {
+        GlobDef.globle_scale = 2.0;
+      }
       this.WindowState = FormWindowState.Maximized;
       LoadHandler.OnLoadEnd += LoadHandler_OnLoadEnd;
 
@@ -42,6 +54,9 @@ namespace FrameClient
         GlobalObject.AddFunction("OnMouseHover").Execute += uiProxy.OnMouseMove;
         GlobalObject.AddFunction("BeginAddFlowItem").Execute += uiProxy.OnBeginAddFlowItem;
         GlobalObject.AddFunction("EndAddFlowItem").Execute += uiProxy.OnEndAddFlowItem;
+        GlobalObject.AddFunction("GetFlowPicSize").Execute += uiProxy.GetFlowPicSize;
+        GlobalObject.AddFunction("GetLiveMaxWidth").Execute += uiProxy.GetLiveMaxWidth;
+        GlobalObject.AddFunction("OnRemoveProcess").Execute += uiProxy.OnRemoveProcess;
       }
     }
 
@@ -52,7 +67,7 @@ namespace FrameClient
 
     void UpdateHoverRect(string rcStr)
     {
-      ExecuteJavascript($"UpdateHoverRect({rcStr})");
+      ExecuteJavascript($"UpdateHoverRect({rcStr},{GlobDef.globle_scale})");
     }
 
     void EnableAddFlowItem()

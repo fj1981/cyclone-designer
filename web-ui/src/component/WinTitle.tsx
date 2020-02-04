@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { observer, inject } from 'mobx-react'
-import { Button } from '@blueprintjs/core'
 import styled from 'styled-components'
+import logo from '../resource/logo.png';
 
 require('../resource/WinTitle.css')
 
@@ -13,8 +12,10 @@ const Header = styled.header`
 `
 
 const Logo = styled.div`
-  order: -1;
-  width: 20px;
+  width: 100px;
+  background: url(${logo}) no-repeat
+  background-size: 100% 100%
+  margin:2px 10px
 `
 const TitleText = styled.div`
   display: flex;
@@ -54,15 +55,6 @@ const SysCommandsLi = styled.li.attrs(
       background-color:rgb(199,202,207);
     }
 `
-
-const SysCommandsLiClose = styled(SysCommandsLi)`
-    &:hover {
-      fill:  #FFFFFF;
-      color: #FFFFFF;
-      background-color: #FF0000;
-    }
-`
-
 
 
 @inject('store')

@@ -1,32 +1,61 @@
 import React, { Component } from 'react'
 import { Button, Card, Elevation } from "@blueprintjs/core";
 import styled from 'styled-components';
-import { IFlowItem } from './def.d';
-import { getGlobal } from 'mobx/lib/internal';
-import GlobDef from '../global';
+import { IFlowItem, FlowItemType } from './def.d';
+import { OnRemoveProcess } from '../Proxy';
+import { inject, observer } from 'mobx-react';
+import { IProps } from '../store/Store';
 
 
 const FlowItemWapper = styled.div`
    margin:10px; 
 `
-interface IPropsEx {
-    store2:IFlowItem,
-    isFocus:boolean
+interface IPropsEx extends IProps {
+    store2: IFlowItem,
+    isFocus: boolean,
 }
-class FlowItem extends Component<IPropsEx,{}> {
+
+@inject('store')
+@observer
+class FlowItem extends Component<IPropsEx, {}> {
     state = {}
+
+    remove = (event: React.MouseEvent<HTMLElement>) => {
+        OnRemoveProcess(this.props.store2.lineNumber);
+    };
+
+    getText = (e: number) => {
+        switch (e) {
+            case FlowItemType.FLOW_CLICK:
+                return '点击操作';
+            case FlowItemType.FLOW_SETTEXT:
+                return '设置文字';
+            case FlowItemType.FLOW_GETTEXT:
+                return '获取文本';
+        }
+        return '';
+    };
     render() {
+
         return (
             <FlowItemWapper  >
-            <Card  interactive={true} elevation={Elevation.TWO}>
-                <div style={{
-                    width:this.props.store2?.size?.width || 400,
-                    height:this.props.store2?.size?.height || 700,
-                    backgroundImage:`url("${GlobDef.res_url}${this.props.store2!.serial}")`,
-                    backgroundSize:'100% 100%',
-                    border:this.props.isFocus? `5px solid red`:``}}/>
-                {/* <img src={require('./test.jpg')} /> */}
-            </Card>
+                <Card interactive={true} elevation={Elevation.TWO} style={{ padding: '10px' }}>
+                    <div style={{ height: 30 }}>
+                        {this.getText(this.props.store2.type)} 
+                    <Button icon="cross" 
+                    small={true} 
+                    style={{ float: 'right' }} 
+                    onClick={this.remove}/>
+                    </div>
+                    <div style={{
+                        width: this.props.store?.pic_size.width,
+                        height: this.props.store?.pic_size.height,
+                        backgroundImage: `url("test.jpg")`,
+                        backgroundSize: '100% 100%',
+                        border: this.props.isFocus ? `5px solid red` : ``
+                    }} />
+                    {/* <img src={require('./test.jpg')} /> */}
+                </Card>
             </FlowItemWapper>
 
         );

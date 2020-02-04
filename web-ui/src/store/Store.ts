@@ -1,16 +1,18 @@
 import { action, computed, observable } from "mobx"
-import { IImageShowParam, IProject,Point, FlowItemType, Rect, IGlobDef } from "../component/def.d";
+import { IImageShowParam, IProject,Point, FlowItemType, Rect, IGlobDef, Size } from "../component/def.d";
 import { IEditDialogProp } from "../component/EditDlg";
-import { BeginAddFlowItem,EndAddFlowItem } from "../Proxy";
+import { BeginAddFlowItem,EndAddFlowItem, GetLiveMaxWidth, GetFlowPicSize } from "../Proxy";
 
 
 class Store {
     @observable public num: number = 0;
-    @observable public video_param: IImageShowParam  = {width:500,height:1000,src:''};
+    @observable public video_param: IImageShowParam  = {width:300,height:600,src:''};
     @observable public create_flowitem: boolean  = false;
     @observable public hover_rc: Rect[]|null  = null;
     @observable public project: IProject  = {};
     @observable public focus_line: number  = -1;
+    @observable public pic_size: Size  = {width:0,height:0};
+    @observable public live_size: Size  = {width:400,height:0};
     @observable public editdlg:IEditDialogProp = {autoFocus: true,
         canEscapeKeyClose: true,
         canOutsideClickClose: false,
@@ -39,6 +41,8 @@ class Store {
     @action.bound
     public SetVideoParam(param :IImageShowParam) {
         this.video_param = param;
+        this.live_size.width = this.video_param.width;
+        this.live_size.height= this.video_param.height;
     }
 
     @action.bound
@@ -57,7 +61,7 @@ class Store {
     @action.bound
     public LoadProject(projs:string) {
         try {
-            
+            this.UpdatePicSize();
             let proj = JSON.parse(projs);
             console.log(proj);
             this.project = proj;
@@ -81,6 +85,16 @@ class Store {
             this.editdlg.point = pt;
         }
         console.log(pt);
+    }
+    @action.bound
+    public UpdateLiveMaxWidth() {
+        this.live_size.width =  GetLiveMaxWidth();
+    }
+
+    @action.bound
+    public UpdatePicSize() {
+        this.pic_size =  GetFlowPicSize();
+        console.log(`444444444 ${JSON.stringify(this.pic_size)}`);
     }
 }
 

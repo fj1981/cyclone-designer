@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { observer, inject } from 'mobx-react'
 import styled from 'styled-components'
 import { Divider } from '@blueprintjs/core'
 import PhoneLive from './PhoneLive'
 import CreatePanel from './CreatePanel'
 import FlowList from './FlowList'
+import { IProps } from '../store/Store'
 
 
 const ContentArea = styled.div`
@@ -24,18 +25,19 @@ const StateShow = styled.div`
 
 const LiveShow = styled.div`
     display: flex;
-    min-width:500px;
+    min-width:${props => (props as IProps).store!.live_size.width + 40}px;
     padding: 10px;
     height:100%;
     flex-direction: column;
-    border:1px solid rgb(255,0,0);
+    border:1px solid rgb(128,0,0);
     justify-content: flex-end;
+    align-content: center;
 `
 
 
 @inject('store')
 @observer
-export default class Content extends Component {
+export default class Content extends React.Component<IProps> {
   static propTypes = {
   }
 
@@ -46,10 +48,10 @@ export default class Content extends Component {
           <FlowList/>
         </StateShow>
         <Divider />
-        <LiveShow>
+        <LiveShow style={{width:`${this.props.store?.live_size.width||400+40}px`}} {...this.props}>
           <PhoneLive />
            <CreatePanel/> 
-        </LiveShow>
+        </LiveShow >
       </ContentArea>
     )
   }

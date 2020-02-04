@@ -46,6 +46,12 @@ export function OnMouseHover(mousePos) {
     }
 }
 
+export function OnRemoveProcess(lineNum) {
+    if(window.OnRemoveProcess) {
+        window.OnRemoveProcess(lineNum);
+    }
+}
+
 export function BeginAddFlowItem() {
     Log('BeginAddFlowItem');
     if(window.BeginAddFlowItem) {
@@ -62,3 +68,18 @@ export function EndAddFlowItem(type,pt,preLineNumber,param) {
     }
 }
 
+export function GetFlowPicSize(){
+   if(window.GetFlowPicSize) {
+       return window.GetFlowPicSize();
+   }
+   return {width:200,height:350};
+}
+
+
+export function GetLiveMaxWidth(){
+    if(window.GetLiveMaxWidth) {
+        return window.GetLiveMaxWidth();
+    }
+    return 500;
+ }
+ 

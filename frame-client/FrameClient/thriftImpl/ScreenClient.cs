@@ -261,6 +261,38 @@ namespace TestFFmpeg.thriftImpl
       return false;
     }
 
+
+    public static string RemoveProcess(Int32 port, String lineNumber)
+    {
+      TSocket socket = new TSocket("127.0.0.1", port, 3000);
+      TFramedTransport.Factory factory = new
+         TFramedTransport.Factory();
+      TTransport transport = factory.GetTransport(socket);
+      TBinaryProtocol.Factory factory1 =
+          new TBinaryProtocol.Factory();
+      TProtocol protocol = factory1.GetProtocol(transport);
+      TMultiplexedProtocol impl1
+       = new TMultiplexedProtocol(protocol, "NodeService");
+
+      NodeService.Client client =
+              new NodeService.Client(impl1);
+      try
+      {
+        socket.Open();
+        return client.RemoveProcess(lineNumber);
+
+      }
+      catch (Exception x)
+      {
+        Console.WriteLine(x.StackTrace);
+      }
+      finally
+      {
+        transport.Close();
+      }
+      return "";
+    }
+
   }
 }
 
