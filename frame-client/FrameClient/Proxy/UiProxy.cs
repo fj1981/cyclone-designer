@@ -41,7 +41,11 @@ namespace FrameClient
 
     public void OnSaveFile(object func, CfrV8HandlerExecuteEventArgs args)
     {
-     
+      var obj = args.Arguments.FirstOrDefault(p => p.IsString);
+      if (obj != null)
+      {
+        PhoneProxy().SaveFile(nameProj);
+      }
     }
 
     public void OnRun(object func, CfrV8HandlerExecuteEventArgs args)
@@ -103,6 +107,11 @@ namespace FrameClient
       jsObject.SetValue("width", CfrV8Value.CreateInt(GlobDef.sz_image.width), CfxV8PropertyAttribute.ReadOnly);
       jsObject.SetValue("height", CfrV8Value.CreateInt(GlobDef.sz_image.height), CfxV8PropertyAttribute.ReadOnly);
       args.SetReturnValue(jsObject);
+    }
+
+    public void GetPrjName(object func, CfrV8HandlerExecuteEventArgs args)
+    {
+      args.SetReturnValue(CfrV8Value.CreateString(nameProj));
     }
 
     public void GetLiveMaxWidth(object func, CfrV8HandlerExecuteEventArgs args)

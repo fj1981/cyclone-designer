@@ -5,6 +5,7 @@ import { IProps } from '../store/Store'
 import styled from 'styled-components'
 import { test_str } from '../resource/test'
 import { BUTTON_ID, BUTTON_STATE } from './def.d'
+import { OnSaveFile } from '../Proxy'
 
 
 const ToolbarWapper = styled.div`
@@ -33,6 +34,11 @@ export default class Toolbar extends React.Component<IProps, {}> {
   private ExcuteCmd(funcName: string) {
     if (funcName === 'OnOpenFile') {
       this.OnOpenFile();
+      return;
+    }
+
+    if (funcName === 'OnSaveFile') {
+      OnSaveFile(this.props.store!.GetDataForSave());
       return;
     }
    // this.LoadImg();

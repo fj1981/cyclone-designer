@@ -102,5 +102,11 @@ namespace FrameClient
       notifyUpdateHoverRect?.Invoke(ret);
       return true;
     }
+
+    public bool SaveFile(string obj)
+    {
+      var ret = ScreenClient.save(stPort, obj);
+      return true;
+    }
   }
 }

@@ -58,6 +58,7 @@ namespace FrameClient
         GlobalObject.AddFunction("GetFlowPicSize").Execute += uiProxy.GetFlowPicSize;
         GlobalObject.AddFunction("GetLiveMaxWidth").Execute += uiProxy.GetLiveMaxWidth;
         GlobalObject.AddFunction("OnRemoveProcess").Execute += uiProxy.OnRemoveProcess;
+        GlobalObject.AddFunction("GetPrjName").Execute += uiProxy.GetPrjName;
       }
     }
 

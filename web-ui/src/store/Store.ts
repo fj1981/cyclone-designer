@@ -1,7 +1,7 @@
 import { action, computed, observable } from "mobx"
 import { IImageShowParam, IProject,Point, FlowItemType, Rect, IGlobDef, Size, BUTTON_STATE, BUTTON_ID, PROCESS_STATE, IRunState } from "../component/def.d";
 import { IEditDialogProp } from "../component/EditDlg";
-import { BeginAddFlowItem,EndAddFlowItem, GetLiveMaxWidth, GetFlowPicSize } from "../Proxy";
+import { BeginAddFlowItem,EndAddFlowItem, GetLiveMaxWidth, GetFlowPicSize, GetPrjName } from "../Proxy";
 
 
 class Store {
@@ -100,6 +100,7 @@ class Store {
             if(proj) {
                 this.focus_line =  proj.focusLineNumber;
                 this.UpdateRunButtonstate();
+                this.button_state[BUTTON_ID.BUTTON_SAVE] = BUTTON_STATE.BTN_ENABLE;
             }
            
         } catch (error) {
@@ -142,7 +143,16 @@ class Store {
         catch(e) {
             console.log(e);
         }
+    }
 
+    @action.bound
+    public GetDataForSave() {
+        let prjName =  GetPrjName();
+        let data = { 
+            prjName,
+            project:this.project
+        };
+        return JSON.stringify(data);
     }
 }
 

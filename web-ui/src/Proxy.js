@@ -16,9 +16,9 @@ export function OnOpenFile() {
     }
 }
 
-export function OnSaveFile() {
+export function OnSaveFile(str) {
     if(window.OnSaveFile) {
-        window.OnSaveFile();
+        window.OnSaveFile(str);
     }
 }
 
@@ -80,6 +80,14 @@ export function GetLiveMaxWidth(){
     if(window.GetLiveMaxWidth) {
         return window.GetLiveMaxWidth();
     }
-    return 500;
+    return 270;
+ }
+ 
+
+ export function GetPrjName(){
+    if(window.GetPrjName) {
+        return window.GetPrjName();
+    }
+    return 'unknown';
  }
  
