@@ -5,6 +5,7 @@ import { IFlowItem, FlowItemType } from './def.d';
 import { OnRemoveProcess } from '../Proxy';
 import { inject, observer } from 'mobx-react';
 import { IProps } from '../store/Store';
+import GlobDef from '../global';
 
 
 const FlowItemWapper = styled.div`
@@ -50,7 +51,7 @@ class FlowItem extends Component<IPropsEx, {}> {
                     <div style={{
                         width: this.props.store?.pic_size.width,
                         height: this.props.store?.pic_size.height,
-                        backgroundImage: `url("test.jpg")`,
+                        backgroundImage: `url("${GlobDef.res_url}${this.props.store2!.serial})`,
                         backgroundSize: '100% 100%',
                         border: this.props.isFocus ? `5px solid red` : ``
                     }} />
