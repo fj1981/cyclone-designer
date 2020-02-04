@@ -16,6 +16,7 @@ namespace FrameClient
     const int stPort = 11111;
     public NotifyUpdateHoverRectHandler notifyUpdateHoverRect;
     public NotifyEnanleAddFlowItemHandler notifyEnanleAddFlowItem;
+
     public bool NewProject(string prjName)
     {
       return ScreenClient.Start(stPort, prjName);

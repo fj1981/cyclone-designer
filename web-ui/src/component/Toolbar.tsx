@@ -4,6 +4,7 @@ import { ButtonGroup, Button } from '@blueprintjs/core/lib/esm/components'
 import { IProps } from '../store/Store'
 import styled from 'styled-components'
 import { test_str } from '../resource/test'
+import { BUTTON_ID, BUTTON_STATE } from './def.d'
 
 
 const ToolbarWapper = styled.div`
@@ -30,11 +31,11 @@ export default class Toolbar extends React.Component<IProps, {}> {
   }
 
   private ExcuteCmd(funcName: string) {
-    if(funcName === 'OnOpenFile') {
-       this.OnOpenFile();
-       return;
+    if (funcName === 'OnOpenFile') {
+      this.OnOpenFile();
+      return;
     }
-    this.LoadImg();
+   // this.LoadImg();
     let funcstr = `
     if(window.${funcName}) {
       window.${funcName}();}
@@ -46,18 +47,56 @@ export default class Toolbar extends React.Component<IProps, {}> {
     this.props.store?.LoadProject(test_str)
   }
 
+  private btnState = (e: BUTTON_ID) => {
+    let state = this.props.store?.button_state[e];
+    if (!state) {
+      return false;
+    }
+    return state == BUTTON_STATE.BTN_ENABLE;
+  }
+
   render() {
     return (
       <ToolbarWapper >
         <ButtonGroup >
-          <Button icon="document" className="bp3-large" onClick={() => this.ExcuteCmd('OnNewFile')} />
-          <Button icon="document-open" className="bp3-large" onClick={() => this.ExcuteCmd('OnOpenFile')} />
-          <Button icon="floppy-disk" className="bp3-large" onClick={() => this.ExcuteCmd('OnSaveFile')} />
+          <Button
+            disabled={!this.btnState(BUTTON_ID.BUTTON_NEW)}
+            style={{ marginLeft: 3 }}
+            onClick={() => this.ExcuteCmd('OnNewFile')}
+            icon="document"
+            className="bp3-large" />
+          <Button
+            disabled={!this.btnState(BUTTON_ID.BUTTON_OPEN)}
+            style={{ marginLeft: 3 }}
+            onClick={() => this.ExcuteCmd('OnOpenFile')}
+            icon="document-open"
+            className="bp3-large" />
+          <Button
+            disabled={!this.btnState(BUTTON_ID.BUTTON_SAVE)}
+            style={{ marginLeft: 3 }}
+            onClick={() => this.ExcuteCmd('OnSaveFile')}
+            icon="floppy-disk"
+            className="bp3-large" />
         </ButtonGroup>
         <ButtonGroup style={{ marginLeft: 5 }} >
-          <Button icon="play" className="bp3-large" onClick={() => this.ExcuteCmd('OnRun')} />
-          <Button icon="pause" className="bp3-large" onClick={() => this.ExcuteCmd('OnPause')} />
-          <Button icon="stop" className="bp3-large" onClick={() => this.ExcuteCmd('OnStop')} />
+          <Button
+            disabled={!this.btnState(BUTTON_ID.BUTTON_RUN)}
+            style={{ marginLeft: 3 }}
+            onClick={() => this.ExcuteCmd('OnRun')}
+            icon="play"
+            className="bp3-large" />
+          <Button
+            disabled={!this.btnState(BUTTON_ID.BUTTON_PAUSE)}
+            style={{ marginLeft: 3 }}
+            onClick={() => this.ExcuteCmd('OnPause')}
+            icon="pause"
+            className="bp3-large" />
+          <Button
+            disabled={!this.btnState(BUTTON_ID.BUTTON_STOP)}
+            style={{ marginLeft: 3 }}
+            onClick={() => this.ExcuteCmd('OnStop')}
+            icon="stop"
+            className="bp3-large" />
         </ButtonGroup>
       </ToolbarWapper >
 

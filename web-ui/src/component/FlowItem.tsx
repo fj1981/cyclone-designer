@@ -51,7 +51,7 @@ class FlowItem extends Component<IPropsEx, {}> {
                     <div style={{
                         width: this.props.store?.pic_size.width,
                         height: this.props.store?.pic_size.height,
-                        backgroundImage: `url("${GlobDef.res_url}${this.props.store2!.serial})`,
+                        backgroundImage: `url("${GlobDef.res_url}${this.props.store2!.serial}")`,
                         backgroundSize: '100% 100%',
                         border: this.props.isFocus ? `5px solid red` : ``
                     }} />

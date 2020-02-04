@@ -34,6 +34,7 @@ namespace FrameClient
         adbWrapper = new AdbWrapper();
         adbWrapper.Init();
         adbWrapper.prjDataCallBack += UpdateFlow;
+        adbWrapper.notifyUpdateProcessStateHandler += UpdateProcessState;
       }
       ImgMgr.Get().dataChangedHandler += UpdateVideo;
       CellPhoneProxy.Instance.notifyUpdateHoverRect += UpdateHoverRect;
@@ -80,6 +81,13 @@ namespace FrameClient
       var cmd = $"UpdateFlow(`{rcStr}`,{GlobDef.GetImgSizeStr()},{GlobDef.image_markrate})";
       ExecuteJavascript(cmd);
     }
+
+    void UpdateProcessState(string rcStr)
+    {
+      var cmd = $"UpdateProcessState(`{rcStr}`)";
+      ExecuteJavascript(cmd);
+    }
+
     private void LoadHandler_OnLoadEnd(object sender, Chromium.Event.CfxOnLoadEndEventArgs e)
     {
       // Check if it is the main frame when page has loaded.

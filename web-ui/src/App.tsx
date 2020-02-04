@@ -82,6 +82,11 @@ function EnableCreateFlowItem() {
 }
 (window as any).EnableCreateFlowItem = EnableCreateFlowItem;
 
+function UpdateProcessState(statestr:string) {
+  store.store.UpdateRunState(statestr);
+}
+(window as any).UpdateProcessState = UpdateProcessState;
+
 const AppLayout = styled.div`
   margin:0;
   display: flex;

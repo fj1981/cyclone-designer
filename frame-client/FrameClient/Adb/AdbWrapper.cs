@@ -28,10 +28,13 @@ namespace FrameClient.Adb
   }
 
   public delegate void PrjDataCallBack(string prj);
+  public delegate void NotifyUpdateProcessStateHandler(string state);
+
 
   class AdbWrapper : IFace , NodeService.Iface
   {
     public PrjDataCallBack prjDataCallBack = null;
+    public NotifyUpdateProcessStateHandler notifyUpdateProcessStateHandler;
     // PC端向手机端发送数据对应端口
     public const Int32 CLIENT_PORT = 11111;
     // PC端接收手机端数据对应端口
@@ -215,7 +218,8 @@ namespace FrameClient.Adb
 
     public bool ProcessCallback(string processStatus)
     {
-      throw new NotImplementedException();
+      notifyUpdateProcessStateHandler?.Invoke(processStatus);
+      return true;
     }
 
     public bool DataCallBack(string data)

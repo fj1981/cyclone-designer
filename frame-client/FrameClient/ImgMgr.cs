@@ -8,6 +8,7 @@ namespace FrameClient
   public delegate void NotifyDataChangedHandler(string res,int width,int height);
   class ImgMgr
   {
+    private static readonly object Lock = new object();
     private ConcurrentDictionary<string, Image> resImage = new ConcurrentDictionary<string, Image>();
     private static ImgMgr instance = null;
     public NotifyDataChangedHandler dataChangedHandler;
@@ -35,8 +36,11 @@ namespace FrameClient
             (int)(img.Width / GlobDef.globle_scale),
             (int)(img.Height / GlobDef.globle_scale));
         }
-        resImage[resName] = img;
-        imgForSave = img;
+        lock (Lock)
+        {
+          imgForSave = img;
+          resImage[resName] = img;
+        }
         dataChangedHandler(resName,img.Width,img.Height);
       }
     }
@@ -76,10 +80,13 @@ namespace FrameClient
       if(imgForSave != null)
       {
         var imgName = "img" + Util.GetTimeStamp();
-        var img = GetThumbnailImage(imgForSave, imgForSave.Width / 2, imgForSave.Height / 2);
-        GlobDef.sz_image.width = img.Width;
-        GlobDef.sz_image.height = img.Height;
-        resImage[imgName] = img;
+        lock (Lock)
+        {
+          var img = GetThumbnailImage(imgForSave, imgForSave.Width / 2, imgForSave.Height / 2);
+          GlobDef.sz_image.width = img.Width;
+          GlobDef.sz_image.height = img.Height;
+          resImage[imgName] = img;
+        }
         return imgName;
       }
       return null;
