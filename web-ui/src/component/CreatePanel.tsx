@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { observer, inject } from 'mobx-react'
 import { Button } from '@blueprintjs/core'
 import styled from 'styled-components'
@@ -7,7 +6,7 @@ import { IProps } from '../store/Store'
 
 
 const CreatePanelWapper = styled.div`
-  height:50px;
+  height:75px;
   text-align:center;
   margin:20px;
 `
@@ -33,7 +32,7 @@ export default class CreatePanel extends React.Component<IProps,{}> {
                     onClick ={this.onClick}
                     disabled = {this.props.store!.create_flowitem}
                 /> 
-                <TextWrapper> 点击创建后，在视频中移动鼠标选取元素，右键创建步骤</TextWrapper>
+                <TextWrapper> 点击创建后，在视频点击鼠标进行操作</TextWrapper>
             </CreatePanelWapper>
         )
     }

@@ -46,6 +46,12 @@ export function OnMouseHover(mousePos) {
     }
 }
 
+export function OnRemoveProcess(lineNum) {
+    if(window.OnRemoveProcess) {
+        window.OnRemoveProcess(lineNum);
+    }
+}
+
 export function BeginAddFlowItem() {
     Log('BeginAddFlowItem');
     if(window.BeginAddFlowItem) {
@@ -53,10 +59,27 @@ export function BeginAddFlowItem() {
     }
 }
 
-export function EndAddFlowItem(type,pt,param) {
+export function EndAddFlowItem(type,pt,preLineNumber,param) {
     Log('EndAddFlowItem');
     if(window.EndAddFlowItem) {
-        window.EndAddFlowItem(JSON.stringify({type,pt,param}));
+        let str = JSON.stringify({type,pt,preLineNumber,param});
+        console.log(str);
+        window.EndAddFlowItem(str);
     }
 }
 
+export function GetFlowPicSize(){
+   if(window.GetFlowPicSize) {
+       return window.GetFlowPicSize();
+   }
+   return {width:200,height:350};
+}
+
+
+export function GetLiveMaxWidth(){
+    if(window.GetLiveMaxWidth) {
+        return window.GetLiveMaxWidth();
+    }
+    return 500;
+ }
+ 

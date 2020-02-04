@@ -29,6 +29,12 @@ namespace FrameClient
     {
       if(img.Width !=0)
       {
+        if(GlobDef.globle_scale != 1)
+        {
+          img = GetThumbnailImage(img,
+            (int)(img.Width / GlobDef.globle_scale),
+            (int)(img.Height / GlobDef.globle_scale));
+        }
         resImage[resName] = img;
         imgForSave = img;
         dataChangedHandler(resName,img.Width,img.Height);

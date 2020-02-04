@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Provider } from "mobx-react"
 import { FocusStyleManager, Divider } from "@blueprintjs/core";
 import styled from 'styled-components'
@@ -8,7 +8,7 @@ import Content from "./component/Content";
 import WinTitle from "./component/WinTitle";
 import VariableList from './component/VariableList';
 import EditDlg from './component/EditDlg';
-import { Rect, IFlowItem, Size } from './component/def.d';
+import { Rect, Size } from './component/def.d';
 import GlobDef from './global';
 
 require('./App.css')
@@ -47,9 +47,12 @@ function UpdateResImpl(resName: string) {
     console.log('There has been a problem with your fetch operation: ', error.message);
   });
 }
-
+let width = 0;
 function UpdateRes(resName: string, newwidth: number, newheight: number) {
-  //UpdateResImpl(resName);
+  if(width != newwidth) {
+    width = newwidth;
+    store.store.UpdateLiveMaxWidth();
+  }
   store.store.SetVideoParam({ width: newwidth, height: newheight, src: `${GlobDef.res_url}${resName}?${tick++}` });
 }
 (window as any).UpdateRes = UpdateRes;
@@ -59,10 +62,10 @@ function UpdateHoverRect(rcs: Rect[], rate: number = 1) {
   store.store.SetHoveerRect(rcs.map(
     e => {
       let ret: Rect = e;
-      ret.bottom *= rate;
-      ret.left *= rate;
-      ret.right *= rate;
-      ret.top *= rate;
+      ret.bottom /= rate;
+      ret.left /= rate;
+      ret.right /= rate;
+      ret.top /= rate;
       return ret
     }));
 }
@@ -70,10 +73,14 @@ function UpdateHoverRect(rcs: Rect[], rate: number = 1) {
 
 
 function UpdateFlow(proj: string, sz: Size, rate: number) {
-  //UpdateResImpl(resName);
   store.store.LoadProject(proj);
 }
 (window as any).UpdateFlow = UpdateFlow;
+
+function EnableCreateFlowItem() {
+  store.store.create_flowitem = false;
+}
+(window as any).EnableCreateFlowItem = EnableCreateFlowItem;
 
 const AppLayout = styled.div`
   margin:0;

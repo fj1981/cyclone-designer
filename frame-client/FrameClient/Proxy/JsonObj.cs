@@ -45,6 +45,8 @@ namespace FrameClient
     /// 
     /// </summary>
     public string param { get; set; }
+
+    public int preLineNumber { get; set; }
   }
 
   public class NewValData

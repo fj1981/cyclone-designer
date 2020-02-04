@@ -1,4 +1,6 @@
-﻿using Chromium.Remote.Event;
+﻿using Chromium;
+using Chromium.Remote;
+using Chromium.Remote.Event;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,12 +41,12 @@ namespace FrameClient
 
     public void OnSaveFile(object func, CfrV8HandlerExecuteEventArgs args)
     {
-
+     
     }
 
     public void OnRun(object func, CfrV8HandlerExecuteEventArgs args)
     {
-
+      phoneProxy?.RunProject(nameProj);
     }
 
     public void OnPause(object func, CfrV8HandlerExecuteEventArgs args)
@@ -60,6 +62,15 @@ namespace FrameClient
     public void GetVideoImage(object func, CfrV8HandlerExecuteEventArgs args)
     {
 
+    }
+
+    public void OnRemoveProcess(object func, CfrV8HandlerExecuteEventArgs args)
+    {
+      var obj = args.Arguments.FirstOrDefault(p => p.IsInt);
+      if (obj != null)
+      {
+        PhoneProxy().RemoveProcess(obj.IntValue);
+      }
     }
 
     public void OnMouseMove(object func, CfrV8HandlerExecuteEventArgs args)
@@ -83,6 +94,20 @@ namespace FrameClient
       {
         PhoneProxy().EndAddFlowItem(obj.StringValue);
       }
+    }
+
+    public void GetFlowPicSize(object func, CfrV8HandlerExecuteEventArgs args)
+    {
+      var jsObjectAccessor = new CfrV8Accessor();
+      var jsObject = CfrV8Value.CreateObject(jsObjectAccessor);
+      jsObject.SetValue("width", CfrV8Value.CreateInt(GlobDef.sz_image.width), CfxV8PropertyAttribute.ReadOnly);
+      jsObject.SetValue("height", CfrV8Value.CreateInt(GlobDef.sz_image.height), CfxV8PropertyAttribute.ReadOnly);
+      args.SetReturnValue(jsObject);
+    }
+
+    public void GetLiveMaxWidth(object func, CfrV8HandlerExecuteEventArgs args)
+    {
+      args.SetReturnValue(CfrV8Value.CreateInt(GlobDef.sz_image.width));
     }
   }
  
